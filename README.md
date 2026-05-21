@@ -1,187 +1,448 @@
-# telegram-controlled-backdoor-spyware
+# Telegram Remote Command and Surveillance Bot
 
-SneakyEyes - Remote Terminal Bot
-Overview
-SneakyEyes is a remote terminal bot for Telegram that allows you to control a computer remotely by issuing various commands via Telegram. You can capture images, screenshots, record audio and video, and execute system commands all through the bot interface. It provides a range of useful features for remote system management, perfect for use in secure environments.
+## Project Overview
 
+SneakyEyes is a comprehensive remote administration bot for Telegram that enables authorized users to control a Windows-based computer remotely. The bot provides extensive system command execution capabilities, media capture functions, and system information retrieval through a simple Telegram interface.
 
-![Screenshot Placeholder](GUI.png)
+## Disclaimer
 
+**IMPORTANT**: This software is intended exclusively for legitimate system administration, authorized monitoring, and educational purposes. Users must obtain explicit written permission from the system owner before deployment. Unauthorized access to computer systems violates:
+- Computer Fraud and Abuse Act (CFAA) in the United States
+- Computer Misuse Act 1990 in the United Kingdom
+- Similar legislation in jurisdictions worldwide
 
-Features
-Remote Command Prompt: Execute Windows commands like listing directories, copying files, listing running processes, etc.
-Capture Image: Take a photo from the system's webcam.
-Capture Screenshot: Take a screenshot of the system's screen.
-Record Audio: Record audio for a specified duration.
-Record Video: Record video for a specified duration.
-System Information: Get details like system uptime, IP address, environment variables, and more.
+The developer assumes no legal liability for misuse of this application. By using this software, you agree that you are solely responsible for compliance with all applicable laws.
 
-Command Prompt session activated! Here are some useful commands:
+## Key Features
 
-    1. **dir** - List files and directories in the current directory
-    2. **cd <directory>** - Change directory
-    3. **cd ..** - Go back to the parent directory
-    4. **cls** - Clear the screen
-    5. **echo <text>** - Display text
-    6. **exit** - Close the Command Prompt session
-    7. **tasklist** - List running processes
-    8. **ping <address>** - Ping an address or domain to check connectivity
-    9. **copy <source> <destination>** - Copy a file from source to destination
-    10. **del <file>** - Delete a specified file
-    11. **mkdir <directory>** - Create a new directory
-    12. **rmdir <directory>** - Remove a directory
-    13. **move <source> <destination>** - Move a file to a different location
-    14. **tree** - Display the directory structure of the current directory
-    15. **type <file>** - Display the content of a file
-    16. **date** - Display or set the current date
-    17. **time** - Display or set the current time
-    18. **ipconfig** - Display network configuration
-    19. **netstat** - Display active network connections and listening ports
-    20. **systeminfo** - Display detailed information about the system
-    21. **driverquery** - List installed drivers on the system
-    22. **hostname** - Display the hostname of the computer
-    23. **wmic cpu get caption** - Get CPU information
-    24. **taskkill /f /im <process>** - Forcefully kill a running process
-    25. **chkdsk** - Check disk for errors
-    26. **shutdown** - Shut down the computer
-    27. **restart** - Restart the computer
-    28. **powercfg /batteryreport** - Generate a battery report (for laptops)
-    29. **list_apps** - List all installed applications
-    30. **open_app <app_path>** - Open a specified application by its full path eg:start chrome, start notepad, start winword, start excel, start chrome then link
-    31. **getip** - Get the external IP address (public IP)
-    32. **whoami** - Display the currently logged-in user
-    33. **uptime** - Show how long the system has been running
-    34. **getenv <variable>** - Fetch the value of a specified environment variable (e.g., `getenv PATH`)
-    35. **net user** - List all user accounts on the machine
-    36. **netsh wlan show profiles** - List saved Wi-Fi networks on the system
-    37. **gettime** - Show the current system time
-    38. **getdate** - Show the current system date
-    39. **sfc /scannow** - Run the System File Checker to fix system file issues
-    40. **start <url>** - Open a URL in the default browser
-    41. **getservice <service_name>** - Get the status of a specific service
-    
-    
-    Other external commands:
-    1. /capture_image - capturing image and sending it to the bot
-    2. /capture_screenshot - capturing screenshot from target and send it to the bot
-    3. /record_audio - recording audio for a certain duration of time. eg: record_audio 15 (15sec)
-    4. /record_video - recording video from target for a certain duration of time. eg: record_video 15 (15sec)
+### Command Execution System
+- Full Command Prompt access with session management
+- File system navigation and manipulation
+- Process management and monitoring
+- Network diagnostics and configuration
+- System information gathering
+- Environment variable management
 
-    Send any command to execute. Type /stopcmd to end the session.
+### Surveillance Capabilities
+- Webcam image capture and transmission
+- Screen capture functionality
+- Microphone audio recording with configurable duration
+- Webcam video recording with configurable duration
 
+### Advanced System Administration
+- Application launching and management
+- Installed software inventory
+- External IP address detection
+- System uptime reporting
+- User account enumeration
+- Wi-Fi network profile extraction
+- Service status queries
+- System File Checker execution
 
+## Technical Specifications
 
-Installation
-To run this bot, ensure you have Python 3.7 or higher installed, along with the necessary dependencies.
+### System Requirements
+- Operating System: Windows 10 or Windows 11
+- Python Version: 3.7 or higher
+- Hardware Requirements:
+  - Webcam (for image/video capture)
+  - Microphone (for audio recording)
+  - Internet connection
 
-Requirements
-Python 3.7+
-opencv-python
-pyautogui
-sounddevice
-soundfile
-python-telegram-bot
+### Python Dependencies
 
-You can install these dependencies using pip:
+```bash
+pip install opencv-python==4.8.1.78
+pip install pyautogui==0.9.54
+pip install sounddevice==0.4.6
+pip install soundfile==0.12.1
+pip install python-telegram-bot==20.7
+```
 
-bash
-pip install opencv-python pyautogui sounddevice soundfile python-telegram-bot
-Telegram Bot Setup
-Create a Telegram bot by talking to BotFather on Telegram.
-Copy your bot's token and replace it in the BOT_TOKEN variable in the script.
-Replace AUTHORIZED_USER_ID with your Telegram user ID to limit access to authorized users.
-Commands
-The following commands are supported:
+### Dependency Purpose Matrix
 
-/cmd: Activate the command prompt session.
-/capture_image: Capture an image from the webcam and send it.
-/capture_screenshot: Take a screenshot and send it.
-/record_audio <duration>: Record audio for the specified duration (in seconds) and send it.
-/record_video <duration>: Record video for the specified duration (in seconds) and send it.
-/stopcmd: Exit the command prompt session.
-How to Use
-Start a chat with your bot on Telegram.
-Send /start to begin the session. If the user is unauthorized, the bot will respond with a "Unauthorized access denied" message.
-To activate the command prompt session, send /cmd. You can then send commands like dir, cd <directory>, ping <address>, and more to interact with the system.
-You can capture images, screenshots, record audio, and video using the corresponding commands.
+| Package | Purpose |
+|---------|---------|
+| opencv-python | Webcam access and video processing |
+| pyautogui | Screen capture functionality |
+| sounddevice | Microphone audio recording |
+| soundfile | Audio file format handling |
+| python-telegram-bot | Telegram API integration |
 
+## Installation Guide
 
-![Screenshot Placeholder](output.png)
+### Method 1: Direct Python Execution
 
+1. **Clone or download the project files**
+   ```bash
+   git clone [repository-url]
+   cd telegram-controlled-backdoor-spyware
+   ```
 
-![Screenshot Placeholder](output2.png)
+2. **Install required dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   Or install individually:
+   ```bash
+   pip install opencv-python pyautogui sounddevice soundfile python-telegram-bot
+   ```
 
-Troubleshooting
-Error: Unable to capture image or video
-Ensure that your webcam is accessible and properly connected.
+3. **Configure bot credentials**
+   - Open the main Python file
+   - Locate the configuration section
+   - Replace placeholder values with your credentials
 
-Error: Command not found
-Ensure that the command is typed correctly and that the session is active using /cmd.
+### Method 2: Executable Creation
 
-Error: Permission Denied
-Ensure that the bot is authorized with the correct user ID and token.
+For distribution without Python installation, convert to standalone executable:
 
-License
+**Step 1: Install PyInstaller**
+```bash
+pip install pyinstaller
+```
+
+**Step 2: Create the Executable**
+```bash
+pyinstaller --noconsole --onefile --icon=images.ico backdoor.py
+```
+
+**Flag Explanations:**
+- `--noconsole`: Hides console window on execution
+- `--onefile`: Creates single executable file
+- `--icon=images.ico`: Assigns custom icon to executable
+
+**Step 3: Locate Output**
+- Executable will be in the `dist` folder
+- Distribute the .exe file to target system
+
+## Telegram Bot Configuration
+
+### Creating Your Bot
+
+1. Open Telegram and search for [@BotFather](https://t.me/BotFather)
+
+2. Send the command:
+   ```
+   /newbot
+   ```
+
+3. Follow prompts to set:
+   - Bot name (display name)
+   - Bot username (must end with 'bot', e.g., MyAdminBot)
+
+4. Save the token provided by BotFather
+
+### Obtaining Your User ID
+
+1. Search for [@userinfobot](https://t.me/userinfobot) on Telegram
+
+2. Start the bot and send any message
+
+3. The bot will reply with your numeric user ID
+
+### Configuration File Settings
+
+Locate these lines in the code and replace with your values:
+
+```python
+# Replace with your Telegram bot token from BotFather
+BOT_TOKEN = "1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+
+# Replace with your numeric Telegram user ID
+AUTHORIZED_USER_ID = 123456789  # No quotes, just numbers
+```
+
+**Security Note**: Never share your bot token or user ID publicly. Anyone with these credentials can control your bot.
+
+## Bot Commands Reference
+
+### Session Management
+
+| Command | Description |
+|---------|-------------|
+| `/start` | Initialize bot and display welcome banner |
+| `/cmd` | Activate command prompt session with full command list |
+| `/stopcmd` | Deactivate active command prompt session |
+
+### Media Capture Commands
+
+| Command | Syntax | Description |
+|---------|--------|-------------|
+| `/capture_image` | `/capture_image` | Capture photo from default webcam |
+| `/capture_screenshot` | `/capture_screenshot` | Capture screen screenshot |
+| `/record_audio` | `/record_audio 15` | Record microphone audio (default 10 seconds) |
+| `/record_video` | `/record_video 15` | Record webcam video (default 10 seconds) |
+
+### System Commands (Available in /cmd mode)
+
+#### File System Operations
+| Command | Description |
+|---------|-------------|
+| `dir` | List files and directories |
+| `cd <directory>` | Change current directory |
+| `cd ..` | Navigate to parent directory |
+| `copy <source> <destination>` | Copy files |
+| `del <file>` | Delete specified file |
+| `mkdir <directory>` | Create new directory |
+| `rmdir <directory>` | Remove directory |
+| `move <source> <destination>` | Move files |
+| `tree` | Display directory structure |
+| `type <file>` | Display file contents |
+
+#### Process Management
+| Command | Description |
+|---------|-------------|
+| `tasklist` | List running processes |
+| `taskkill /f /im <process>` | Force kill process |
+
+#### Network Commands
+| Command | Description |
+|---------|-------------|
+| `ping <address>` | Test network connectivity |
+| `ipconfig` | Display network configuration |
+| `netstat` | Show active connections |
+| `netsh wlan show profiles` | List saved Wi-Fi networks |
+
+#### System Information
+| Command | Description |
+|---------|-------------|
+| `systeminfo` | Detailed system information |
+| `driverquery` | List installed drivers |
+| `hostname` | Display computer name |
+| `wmic cpu get caption` | CPU information |
+| `date` | Display or set system date |
+| `time` | Display or set system time |
+| `whoami` | Current logged-in user |
+| `uptime` | System uptime duration |
+| `getip` | External IP address |
+| `getenv <variable>` | Environment variable value |
+| `gettime` | Current system time |
+| `getdate` | Current system date |
+
+#### Advanced Commands
+| Command | Description |
+|---------|-------------|
+| `list_apps` | List all installed applications |
+| `open_app <path>` | Launch application |
+| `start <url>` | Open URL in browser |
+| `chkdsk` | Check disk for errors |
+| `sfc /scannow` | Run System File Checker |
+| `shutdown` | Shut down computer |
+| `restart` | Restart computer |
+| `powercfg /batteryreport` | Generate battery report (laptops) |
+| `net user` | List user accounts |
+| `getservice <service_name>` | Service status query |
+
+## Usage Workflow
+
+### Initial Setup Verification
+
+1. Run the Python script:
+   ```bash
+   python backdoor.py
+   ```
+
+2. Open Telegram and navigate to your bot
+
+3. Send `/start` - Expected response:
+   ```
+   🌟✨🌙🔒🔑 Welcome to 🔐 SneakyEyes 🔑🌙✨🌟
+   🚨 by IllusiveHacks 🚨
+   
+   🛠️ Remote Terminal Bot 🛠️
+   Use /cmd to activate the Command Prompt session.
+
+   🖥️ Capture Image 📸 | Capture Screenshot 📷
+   🎤 Record Audio 🎵 | 🎬 Record Video 🎥
+
+   Enjoy your session! 😎
+   ```
+
+### Command Session Example
+
+```
+User: /cmd
+Bot: [Displays 41 command options and instructions]
+
+User: dir
+Bot: [Lists current directory contents]
+
+User: cd Documents
+Bot: Current Directory: C:\Users\username\Documents
+
+User: ipconfig
+Bot: [Displays network configuration]
+
+User: /stopcmd
+Bot: Command Prompt session deactivated.
+```
+
+### Media Capture Example
+
+```
+User: /capture_screenshot
+Bot: [Returns screenshot image]
+
+User: /record_audio 5
+Bot: Recording audio for 5 seconds...
+Bot: [Returns audio file]
+```
+
+## Output Examples
+
+### Screenshot Output
+![Screenshot Output](output.png)
+
+### Command Execution Output
+![Command Output](output2.png)
+
+## File Structure
+
+```
+project/
+├── backdoor.py          # Main application file
+├── images.ico           # Custom icon for executable
+├── requirements.txt     # Python dependencies list
+├── LICENSE             # MIT License file
+├── output.png          # Screenshot example
+├── output2.png         # Command example
+└── dist/               # PyInstaller output directory
+    └── backdoor.exe    # Standalone executable
+```
+
+## Security Features
+
+### Implemented Security Measures
+- **User Authentication**: Single authorized user ID restriction
+- **Session State Management**: Command mode requires explicit activation
+- **No Persistent Storage**: Media files deleted after transmission
+- **Input Validation**: Command duration and parameter validation
+
+### Security Limitations (Be Aware)
+- Commands execute with logged-in user privileges
+- No encryption for command transmission (Telegram provides transport encryption)
+- No logging or audit trail
+- No rate limiting on command execution
+
+## Troubleshooting Guide
+
+### Common Issues and Solutions
+
+| Problem | Likely Cause | Solution |
+|---------|--------------|----------|
+| Bot doesn't respond | Invalid BOT_TOKEN | Regenerate token from BotFather and update code |
+| "Unauthorized access denied" | Wrong USER_ID | Verify ID using @userinfobot |
+| Camera capture fails | Webcam in use or disconnected | Close other camera apps, check device manager |
+| Audio recording fails | Microphone permissions | Check Windows privacy settings for microphone |
+| Video recording fails | Codec issues | Install appropriate video codecs |
+| Command not recognized | Session inactive | Send `/cmd` before entering commands |
+| Long output truncated | Telegram message limit | Bot automatically chunks responses |
+
+### Error Message Reference
+
+| Error Message | Meaning |
+|---------------|---------|
+| `Error: 'path' is not a valid directory` | Specified directory doesn't exist |
+| `Invalid duration: must be positive integer` | Use whole numbers only (e.g., 10, not 10.5 or -5) |
+| `Permission denied` | Insufficient system privileges for operation |
+| `Command not found` | Typo or command not in Windows PATH |
+
+## Testing Procedure
+
+Before deploying to a remote system, test all functionality on your local machine:
+
+1. **Authentication Test**
+   ```
+   Send /start from authorized ID → Receive welcome banner
+   Send /start from different ID → Receive "Unauthorized access denied"
+   ```
+
+2. **Command Session Test**
+   ```
+   /cmd → Receive command list
+   dir → Receive directory listing
+   /stopcmd → Receive deactivation confirmation
+   ```
+
+3. **Media Capture Tests**
+   ```
+   /capture_image → Receive photo
+   /capture_screenshot → Receive screenshot
+   /record_audio 3 → Receive audio file
+   /record_video 3 → Receive video file
+   ```
+
+## Deployment Instructions
+
+### For Target System Deployment
+
+1. Verify target runs Windows 10 or 11
+
+2. Transfer the executable or Python files to target system
+
+3. Ensure no conflicting security software blocks execution
+
+4. Run `backdoor.exe` (no installation required)
+
+5. Verify bot responds to commands from Telegram
+
+6. For persistent access, consider adding to Startup folder:
+   ```
+   %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
+   ```
+
+## Legal and Ethical Guidelines
+
+### Permitted Use Cases
+- Monitoring your own devices
+- Authorized parental control systems
+- Corporate endpoint management with employee consent
+- Educational cybersecurity training in controlled environments
+
+### Prohibited Use Cases
+- Monitoring without explicit consent
+- Espionage or competitive intelligence
+- Stalking or harassment
+- Any violation of computer crime laws
+
+## License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Contact
-For any questions or issues, please contact me at IllusiveHacks on Telegram or email me at williamkitungo@gmail.com.
+MIT License grants:
+- Free use, modification, and distribution
+- No warranty or liability
+- Commercial use permitted
+- Attribution required
 
+## Support and Contact
 
+For technical questions or issues:
 
+- **Telegram**: @IllusiveHacks
+- **Email**: williamkitungo@gmail.com
 
-USERS PLEASE NOTE THAT SOME FILES LIKE THE backdoor.exe and backdoor.pkg are missing because they are large in size. Kindly follow the instructions below to create your own backdoor successfully
+## Version History
 
-1. Create a folder in your computer in a prefered directory.
-2. Open visual studio code and navigate to file to open the folder you have created.
-3. Navigate to my github account and access the backdoor.py file and images.ico, you can either download it or copy its content.
-4. Open the visual studio and create a file by the name "backdoor.py" and paste the code inside the file.
-5. Move your downloaded image.ico to the same directory as your backdoor.py file
-6. Download the necessary requirements. Navigate to the run nav and select new terminal 
-    Subprocess
-    os
-    cv2
-    time
-    pyautogui
-    sounddevice
-    soundfile
-    threading 
-    telegrambot
-   
-    USE THIS COMMAND TO DOWNLOAD THE REQUIREMENTS IN THE TERMINAL ````python -m pip install "requirement`s name"````
-   
-8. After all requirements are installed, open telegram and search for bot father and id bot to create your bot token and chat id respectively. NOTE: Dont share your bot token and chat id with anyone!!
-   now after creating them navigate to the code and paste them to the appropriate sections indicated by comments.
-9. Now run the code to check whether the code is working, you can verify it by leaving the code running and opening your telegram and navigate to the bot through the link administered to you after you created the bot. make sure to start you bot it should show case this information below:
-                """
-    🌟✨🌙🔒🔑 Welcome to 🔐 **SneakyEyes** 🔑🌙✨🌟
-    🚨 by **IllusiveHacks** 🚨
-    
-    🛠️ Remote Terminal Bot 🛠️
-    Use **/cmd** to activate the Command Prompt session.
+| Version | Date | Updates |
+|---------|------|---------|
+| 1.0 | Current | Initial release with full feature set |
 
-    🖥️ Capture Image 📸 | Capture Screenshot 📷
-    🎤 Record Audio 🎵 | 🎬 Record Video 🎥
+## Acknowledgments
 
-    Enjoy your session! 😎
-    """
+- Python Telegram Bot library developers
+- OpenCV community
+- All open-source dependencies used in this project
 
-use the /cmd command to activate the command prompt session of the target device at this point the target machine will be your computer coz its currently the one running the code
+## Final Notes
 
-All the commands to use will be displayed and now you can execute each one of them from your bot to the target device.
+**Important Reminders:**
+- Keep your bot token and user ID secure
+- Test thoroughly before remote deployment
+- Comply with all applicable laws and regulations
+- Use responsibly and ethically
 
-10. Now after verifying that it working you can navigate to the terminal and convert the backdoor.py to an executable using the command below:
-    step 1. ````pip install pyinstaller````
-    step 2. Create the Executable
-            Use the following command to convert your Python script (script.py) into an executable with no console and a custom icon:
+---
 
-            bash
-            pyinstaller --noconsole --onefile --icon=path_to_icon.ico script.py
-    
-    Explanation of the flags:
-
-       --noconsole: Hides the console window when running the executable.
-       --onefile: Packages everything into a single .exe file.
-       --icon=path_to_icon.ico: Specifies the custom icon for the executable.
-
-
+*This documentation is provided as-is without any warranties. Users assume all responsibility for deployment and use.*
